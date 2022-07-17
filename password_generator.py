@@ -5,40 +5,51 @@ import string
 import random
 import time
 
-characters = list(string.ascii_letters + string.digits)
 
-
-def password_generate():
-    length = int(input("Enter password length: "))
-    site = input("Site for password: ")
-    special_symbols = input("Special symbols Y/N: ").upper()
-    specials = ["!", "@", "#", "$", "%", "&", "*"]
-    if special_symbols == "Y":
+def special_symbol(symbol):
+    if symbol == "Y":
         # "!@#$%^&*"
         characters.extend(specials)
         random.shuffle(characters)
     else:
         random.shuffle(characters)
 
-    password = []
-    for i in range(length):
-        password.append(random.choice(characters))
-    random.shuffle(password)
+
+def generated_password(len, chars, pwd):
+    for i in range(len):
+        pwd.append(random.choice(chars))
+    random.shuffle(pwd)
+
+
+def user_message(pwd, site):
     print("Generating password...")
     time.sleep(1)
-    print(f'Your password is: {"".join(password)}')
+    print(f'Your password is: {"".join(pwd)}')
     print(f"The password is for {site}")
     print("Saving data in passwords.txt...")
     time.sleep(1)
     print("Saved!")
 
+
+def write_to_file(pwd, site):
     with open("passwords.txt", "a") as file:
         file.write(f"Website: {site} --> ")
         generated_password = ""
-        for i in password:
+        for i in pwd:
             generated_password += i
         file.write(f"Password: {generated_password}")
         file.write("\n")
 
 
-password_generate()
+characters = list(string.ascii_letters + string.digits)
+
+length = int(input("Enter password length: "))
+site = input("Site for password: ")
+special_symbols = input("Special symbols Y/N: ").upper()
+specials = ["!", "@", "#", "$", "%", "&", "*"]
+password = []
+
+special_symbol(special_symbols)
+generated_password(length, characters, password)
+user_message(password, site)
+write_to_file(password, site)
