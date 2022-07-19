@@ -31,8 +31,7 @@ class GeneratePassword(Screen):
 
     def write_to_file(self):
         with open("password.txt", "a") as file:
-            file.write(f'{self.generate_password()}:{self.website.text}:{self.email.text}')
-            file.write('\n')
+            file.write(f'{self.generate_password()}:{self.website.text}:{self.email.text}\n')
         self.password_length.text = ''
         self.website.text = ''
         self.email.text = ''
